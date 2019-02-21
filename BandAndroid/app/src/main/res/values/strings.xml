@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">Band</string>
-    <string name="test">Test</string>
+
+    // user credentials
+    <string name="email">Email</string>
+    <string name="pass">Password</string>
+    <string name="login">Login</string>
+    <string name="register">
+        <u>Don\'t have an account? Register</u>
+    </string>
+    <string name="signup">Sign up</string>
+    <string name="username">Username</string>
+    <string name="continue_">Continue</string>
 </resources>
