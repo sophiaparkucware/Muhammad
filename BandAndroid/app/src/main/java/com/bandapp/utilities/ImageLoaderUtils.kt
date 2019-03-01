@@ -19,17 +19,17 @@ class ImageLoaderUtils {
         private var imageLoader: ImageLoader? = null
         private var options: DisplayImageOptions? = null
 
-        fun loadImage(uri: String?, circleImageView: CircleImageView, success: (Bitmap) -> Unit) {
+        fun loadImage(uri: String?, profileImageView: ImageView?, success: (Bitmap) -> Unit) {
 
             if (uri == null) {
-                circleImageView.setImageResource(0)
+                profileImageView?.setImageResource(0)
                 return
             }
             options = DisplayImageOptions.Builder().considerExifParams(true)
-                    .cacheInMemory(false).cacheOnDisk(true).build()
+                .cacheInMemory(false).cacheOnDisk(true).build()
             imageLoader = ImageLoader.getInstance()
             imageLoader!!.handleSlowNetwork(true)
-            imageLoader!!.displayImage(uri, circleImageView, options, object : ImageLoadingListener {
+            imageLoader!!.displayImage(uri, profileImageView, options, object : ImageLoadingListener {
 
                 override fun onLoadingCancelled(arg0: String, arg1: View) {
 //                    progressBar.setVisibility(View.GONE);
@@ -37,8 +37,11 @@ class ImageLoaderUtils {
 
                 override fun onLoadingComplete(arg0: String, arg1: View, bitmap: Bitmap) {
 //                    progressBar.setVisibility(View.GONE);
-                    circleImageView.setImageBitmap(bitmap)
-                    success(bitmap)
+                    if (profileImageView != null) {
+                        profileImageView.setImageBitmap(bitmap)
+                        success(bitmap)
+                    }
+
                 }
 
                 override fun onLoadingFailed(arg0: String, arg1: View, arg2: FailReason) {

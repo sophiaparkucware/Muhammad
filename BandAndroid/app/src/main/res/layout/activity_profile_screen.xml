@@ -24,8 +24,8 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:titleTextColor="@android:color/white"
-                android:background="@color/colorPrimary"
+                app:titleTextColor="@android:color/black"
+                android:background="@android:color/white"
                 app:title="Setup Profile"
         >
 
@@ -65,7 +65,7 @@
                         android:src="@drawable/camera"
                         android:tint="@android:color/black"
                         android:layout_gravity="center"
-                        android:backgroundTint="@android:color/darker_gray"/>
+                        app:backgroundTint="@android:color/darker_gray"/>
 
             </FrameLayout>
         </android.support.design.widget.CoordinatorLayout>

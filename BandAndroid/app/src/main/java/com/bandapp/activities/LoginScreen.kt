@@ -15,6 +15,7 @@ import android.support.annotation.NonNull
 import com.google.android.gms.tasks.OnCompleteListener
 import android.R
 import android.content.Intent
+import android.graphics.Color
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -54,7 +55,7 @@ class LoginScreen : BasicAppCompatActivity() {
                 fetchUserFromDB(firebaseUser)
             }, failure = { s ->
                 progressBar?.visibility = View.GONE
-                Utils.showSnackbar(progressBar, s!!)
+                Utils.showSnackbar(progressBar, s!!, Color.RED)
             })
         }
 
@@ -90,14 +91,14 @@ class LoginScreen : BasicAppCompatActivity() {
                 finish()
             }else{
                 val intent = Intent(this@LoginScreen, HomeScreen::class.java)
-                intent.putExtra("user", user)
+                intent.putExtra("user", user1)
                 startActivity(intent)
                 finish()
             }
         }, failure = {
                 s ->
             progressBar?.visibility = View.GONE
-            Utils.showSnackbar(loginBtn, s!!)
+            Utils.showSnackbar(loginBtn, s!!, Color.RED)
         })
     }
 }

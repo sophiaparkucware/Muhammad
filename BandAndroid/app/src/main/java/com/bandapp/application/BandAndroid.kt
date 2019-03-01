@@ -2,6 +2,8 @@ package com.bandapp.application
 
 import android.app.Application
 import android.content.Context
+import com.google.firebase.database.FirebaseDatabase
+
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache
 import com.nostra13.universalimageloader.core.ImageLoader
@@ -10,9 +12,15 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType
 
 class BandAndroid: Application() {
 
+    companion object {
+
+    }
+
     override fun onCreate() {
         super.onCreate()
+        FirebaseDatabase.getInstance().setPersistenceEnabled(false)
         initImageLoader(this)
+
     }
 
     private fun initImageLoader(context: Context) {

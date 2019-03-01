@@ -4,6 +4,7 @@ import android.app.ProgressDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.BottomSheetBehavior
@@ -53,8 +54,8 @@ class ProfileScreen : BasicAppCompatActivity() {
             task?.addOnSuccessListener { void ->
                 if (DatabaseReference.getFirebaseAuth().currentUser?.isEmailVerified!!) {
                     uploadProfileImage()
-                }else{
-                    Utils.showSnackbar(continueBtn, "please verify your email")
+                } else {
+                    Utils.showSnackbar(continueBtn, "please verify your email", Color.RED)
                 }
             }
 
@@ -114,25 +115,26 @@ class ProfileScreen : BasicAppCompatActivity() {
         if (loggedInUser != null) {
             DatabaseReference.getProfileImagesRef(loggedInUser?.id).putBytes(data).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    val url = task.result?.uploadSessionUri
-                    print(url)
-                    loggedInUser?.username = input_username?.text?.toString()
-                    loggedInUser?.profilePicture = url?.toString()
-                    loggedInUser?.writeUserToFBDB(success = { b ->
-                        if (b!!) {
-                            val intent = Intent(this@ProfileScreen, HomeScreen::class.java)
-                            intent.putExtra("user", loggedInUser)
-                            startActivity(intent)
-                            finish()
-                        } else {
-                            progressDialog.dismiss()
-                            Utils.showSnackbar(continueBtn, "error occured")
-                        }
-                    })
+                    DatabaseReference.getProfileImagesRef(loggedInUser?.id).downloadUrl.addOnSuccessListener { uri ->
+                        loggedInUser?.username = input_username?.text?.toString()
+                        loggedInUser?.profilePicture = uri?.toString()
+                        loggedInUser?.writeUserToFBDB(success = { b ->
+                            if (b!!) {
+                                val intent = Intent(this@ProfileScreen, HomeScreen::class.java)
+                                intent.putExtra("user", loggedInUser)
+                                startActivity(intent)
+                                finish()
+                            } else {
+                                progressDialog.dismiss()
+                                Utils.showSnackbar(continueBtn, "error occured", Color.RED)
+                            }
+                        })
+                    }
+
                 }
             }.addOnFailureListener { exception ->
                 progressDialog.dismiss()
-                Utils.showSnackbar(continueBtn, exception.message!!)
+                Utils.showSnackbar(continueBtn, exception.message!!, Color.RED)
 
             }.addOnProgressListener { taskSnapshot ->
                 val progress = (100.0 * taskSnapshot.bytesTransferred) / taskSnapshot.totalByteCount

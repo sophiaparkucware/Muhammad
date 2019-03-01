@@ -11,4 +11,21 @@
     <string name="signup">Sign up</string>
     <string name="username">Username</string>
     <string name="continue_">Continue</string>
+
+    // home screen
+    <string name="no_band_found">There are no bands created yet. Tap to create</string>
+    <string name="done_">Done</string>
+    <string name="enter_group_name">Enter Group Name</string>
+    <string name="add_photo">Add photo</string>
+    <string name="your_bands">
+        <u>Your bands</u>
+    </string>
+    <string name="invite">Invite</string>
+    <string name="create_group">Create Group</string>
+    <string name="your_groups">Your Groups</string>
+    <string name="add_member">Add Member</string>
+    <string name="enter_username">Enter username to add</string>
+    <string name="invites">Invites</string>
+    <string name="invite_message">Are you sure you want to accept invite?</string>
+
 </resources>

@@ -30,6 +30,7 @@
                     android:imeOptions="actionNext"
                     android:inputType="textEmailAddress"
                     android:hint="@string/email"
+                    android:text="nauman.mir@suavistech.com"
                     android:textCursorDrawable="@null"/>
 
         </android.support.design.widget.TextInputLayout>
