@@ -1,14 +1,10 @@
 package com.bandapp.models
 
-import android.graphics.Color
-import android.view.View
 import com.bandapp.database_reference.DatabaseReference
-import com.bandapp.utilities.Utils
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
-import kotlinx.android.synthetic.main.activity_add_member_screen.*
 import java.io.Serializable
 
 class User : Serializable {
@@ -67,7 +63,7 @@ class User : Serializable {
     }
 
     fun fetchBandsList(success: (ArrayList<Band?>) -> Unit, failure: (String?) -> Unit) {
-        DatabaseReference.getBandsReference().orderByChild("createdBy").equalTo(this.id)
+        DatabaseReference.getUsersReference().child(this.id!!).child("userBands")
             .addValueEventListener(object : ValueEventListener {
                 override fun onCancelled(p0: DatabaseError) {
                     failure("error occured")
@@ -77,18 +73,57 @@ class User : Serializable {
                     if (p0.exists() && p0.getValue() != null) {
                         val list = ArrayList<Band?>()
                         for (datasnaphot in p0.children) {
-                            val band: Band? = datasnaphot.getValue(Band::class.java)
-                            if (band != null) {
-                                band.bandId = datasnaphot.key
-                                list.add(band)
+                            val userBand: UserBand? = datasnaphot.getValue(UserBand::class.java)
+                            if (userBand != null) {
+                                fetchBandsWithIds(userBand.id, list, success = { arrayList ->
+                                    if (arrayList.size == p0.childrenCount.toInt()) {
+                                        success(arrayList)
+                                    }
+
+                                }, failure = { s ->
+                                    failure(s)
+                                })
                             }
+//                            val band: Band? = datasnaphot.getValue(Band::class.java)
+//                            if (band != null) {
+//                                band.bandId = datasnaphot.key
+//                                list.add(band)
+//                            }
                         }
-                        success(list)
+//                        success(list)
                     } else {
                         success(ArrayList())
                     }
                 }
             })
+    }
+
+    private fun fetchBandsWithIds(
+        id: String?,
+        list: ArrayList<Band?>,
+        success: (ArrayList<Band?>) -> Unit,
+        failure: (String?) -> Unit
+    ) {
+        DatabaseReference.getBandsReference().child(id!!).addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+                failure("error occured")
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                if (p0.exists() && p0.getValue() != null) {
+                    val band: Band? = p0.getValue(Band::class.java)
+                    if (band != null) {
+                        band.bandId = p0.key
+                        list.add(band)
+                    }
+                    success(list)
+
+                } else {
+                    success(ArrayList())
+                }
+            }
+
+        })
     }
 
     fun writeUserToFBDB(success: (Boolean?) -> Unit) {
@@ -110,7 +145,7 @@ class User : Serializable {
 
     fun fetchSearchedUser(username: String?, success: (User?) -> Unit, failure: (String?) -> Unit) {
         DatabaseReference.getUsersReference().orderByChild("username")
-            .equalTo(username?.toLowerCase()?.trim())
+            .equalTo(username?.trim())
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onCancelled(p0: DatabaseError) {
                     failure("error occured")

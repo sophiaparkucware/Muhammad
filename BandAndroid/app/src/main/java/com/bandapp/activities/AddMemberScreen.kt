@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.activity_add_member_screen.*
 
 class AddMemberScreen : BasicAppCompatActivity() {
     var band: Band? = null
+    var user: User? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +27,7 @@ class AddMemberScreen : BasicAppCompatActivity() {
 
     override fun initValues() {
         band = intent?.getSerializableExtra("band") as Band?
+        user = intent?.getSerializableExtra("user") as User?
     }
 
     override fun initValuesInViews() {
@@ -66,12 +68,12 @@ class AddMemberScreen : BasicAppCompatActivity() {
 
     private fun checkIfSearchedUserExists() {
         progressBar_add_member?.visibility = View.VISIBLE
-        User().fetchSearchedUser(input_member_username?.text?.toString(), success = { it ->
+        user?.fetchSearchedUser(input_member_username?.text?.toString(), success = { it ->
             progressBar_add_member?.visibility = View.GONE
             if (it != null) {
                 if (!it.id?.equals(DatabaseReference.getFirebaseAuth().currentUser?.uid)!!) {
                     sendInviteToSearchedUser(it)
-                    Utils.showSnackbar(input_member_username, "Invite sent", Color.GREEN)
+                    Utils.showSnackbar(input_member_username, "Invite sent", resources.getColor(R.color.colorPrimary))
 //                    finish()
                     input_member_username?.setText("")
                 } else {

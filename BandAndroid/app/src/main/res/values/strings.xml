@@ -27,5 +27,13 @@
     <string name="enter_username">Enter username to add</string>
     <string name="invites">Invites</string>
     <string name="invite_message">Are you sure you want to accept invite?</string>
+    <string name="post">Post</string>
+    <string name="whats_on_your_mind">What\'s on your mind?</string>
+    <string name="posts_hint">No posts yet</string>
+    <string name="comment">Comment</string>
+    <string name="edit_post">Edit Post</string>
+    <string name="delete_post">Delete Post</string>
+    <string name="add_a_comment">Add a comment</string>
+
 
 </resources>

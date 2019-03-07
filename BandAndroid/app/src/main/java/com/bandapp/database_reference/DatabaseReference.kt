@@ -17,6 +17,7 @@ class DatabaseReference {
         private val PROFILE_PICTURES = "profile_pictures_uploads"
         private val BANDS_REFERENCE = "/bands"
         private val BANDS_IMAGES_UPLOADS = "bands_images"
+        private val POSTS_REFERENCE = "/posts"
         val database = FirebaseDatabase.getInstance()
 
         fun getUsersReference(): DatabaseReference {
@@ -41,6 +42,10 @@ class DatabaseReference {
 
         fun getBandImagesRef(uid: String?): StorageReference {
             return getStorageRef().child(BANDS_IMAGES_UPLOADS).child(uid!!)
+        }
+
+        fun getPostsReference(): DatabaseReference{
+            return  database.getReference(DATABASE_MODE + POSTS_REFERENCE)
         }
     }
 }

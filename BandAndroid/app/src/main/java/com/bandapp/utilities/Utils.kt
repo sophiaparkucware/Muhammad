@@ -9,6 +9,7 @@ import android.R.string.cancel
 import android.content.Context
 import android.content.DialogInterface
 import android.support.v7.app.AlertDialog
+import java.util.concurrent.TimeUnit
 
 
 class Utils {
@@ -54,6 +55,40 @@ class Utils {
 
             val alert11 = builder1.create()
             alert11.show()
+        }
+
+        fun getTime(timeInMillis: Long?): String {
+            val diffInMillis = System.currentTimeMillis() - timeInMillis!!
+            val seconds = TimeUnit.MILLISECONDS.toSeconds(diffInMillis)
+            val minutes = TimeUnit.MILLISECONDS.toMinutes(diffInMillis)
+            val hours = TimeUnit.MILLISECONDS.toHours(diffInMillis)
+            val days = TimeUnit.MILLISECONDS.toDays(diffInMillis)
+            var time = ""
+            if (seconds < 60) {
+                time = seconds.toString() + " secs ago"
+            } else if (minutes < 60) {
+                if (minutes.toInt() == 1) {
+                    time = minutes.toString() + " min ago"
+                } else {
+                    time = minutes.toString() + " mins ago"
+                }
+
+            } else if (hours < 24) {
+                if (hours.toInt() == 1) {
+                    time = hours.toString() + " hour ago"
+                } else {
+                    time = hours.toString() + " hours ago"
+                }
+
+            } else {
+                if (days.toInt() == 1) {
+                    time = days.toString() + " day ago"
+                } else {
+                    time = days.toString() + " days ago"
+                }
+
+            }
+            return time
         }
     }
 }

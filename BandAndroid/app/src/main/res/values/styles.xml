@@ -30,4 +30,14 @@
         <item name="android:textColorHint">@android:color/darker_gray</item>
     </style>
 
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/slide_left</item>
+        <item name="android:windowExitAnimation">@anim/slide_right</item>
+    </style>
+
+    <style name="ButtonGray">
+        <item name="android:background">@drawable/button_gray_dark</item>
+        <item name="android:textColor">@android:color/darker_gray</item>
+    </style>
+
 </resources>

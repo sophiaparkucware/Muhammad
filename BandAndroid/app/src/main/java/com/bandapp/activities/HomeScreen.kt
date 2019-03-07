@@ -99,6 +99,7 @@ class HomeScreen : BasicAppCompatActivity() {
     fun clickedBand(band: Band) {
         val intent = Intent(this, BandDetailScreen::class.java)
         intent.putExtra("band", band)
+        intent.putExtra("user", loggedInUser)
         startActivity(intent)
     }
 

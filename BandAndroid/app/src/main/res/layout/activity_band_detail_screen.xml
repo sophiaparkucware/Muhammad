@@ -110,7 +110,8 @@
                         android:orientation="vertical"
                         android:layout_marginTop="7dp"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginStart="5dp">
+                        android:layout_marginStart="5dp"
+                        android:id="@+id/topLayout">
 
                     <TextView
                             android:layout_width="wrap_content"
@@ -129,7 +130,8 @@
                             android:orientation="horizontal"
                             android:layout_marginStart="6dp"
                             android:layout_marginLeft="6dp"
-                            android:layout_marginTop="2dp">
+                            android:layout_marginTop="2dp"
+                            android:layout_marginBottom="3dp">
 
                         <TextView
                                 android:layout_width="wrap_content"
@@ -137,23 +139,46 @@
                                 android:id="@+id/noOfMembers"
                                 android:layout_gravity="center_vertical"
                                 android:textColor="@android:color/black"/>
+
+                        <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="7dp"
+                                android:layout_marginStart="7dp"
+                                android:id="@+id/inviteLayout">
+
+                            <ImageView android:layout_width="20dp" android:layout_height="20dp"
+                                       android:layout_gravity="center_vertical"
+                                       android:src="@drawable/plus_circle_outline"
+                                       android:tint="@color/colorPrimary"/>
+
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                      android:layout_gravity="center_vertical"
+                                      android:text="@string/invite"
+                                      android:textSize="12sp"
+                                      android:textColor="@color/colorPrimary"
+                                      android:layout_marginLeft="5dp"
+                                      android:layout_marginStart="5dp"/>
+                        </LinearLayout>
+
+
                     </LinearLayout>
 
 
                 </LinearLayout>
 
                 <RelativeLayout android:layout_width="wrap_content"
-                              android:layout_height="wrap_content"
-                              android:layout_gravity="center"
-                              android:layout_marginRight="11dp"
-                              android:background="@drawable/rounded_btn"
-                              android:layout_marginEnd="11dp"
-                              android:id="@+id/invite_member">
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginRight="11dp"
+                                android:background="@drawable/rounded_btn"
+                                android:layout_marginEnd="11dp"
+                                android:id="@+id/post">
 
 
                     <TextView android:layout_width="wrap_content"
                               android:layout_height="wrap_content"
-                              android:text="@string/invite"
+                              android:text="@string/post"
                               android:layout_centerInParent="true"
                               android:textColor="@android:color/white"
                               android:padding="10dp"
@@ -163,11 +188,45 @@
                 </RelativeLayout>
             </LinearLayout>
 
-            <View
+            <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="12dp"
+                    android:layout_height="match_parent"
                     android:background="#A1ECEAEA"
-                    android:layout_marginTop="6dp"/>
+                    android:orientation="vertical"
+                    android:descendantFocusability="blocksDescendants">
+
+                <android.support.v7.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/RV_Posts"
+                        android:layout_marginBottom="10dp"
+                        android:clipToPadding="true">
+
+                </android.support.v7.widget.RecyclerView>
+
+                <ProgressBar
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:indeterminateTintMode="src_atop"
+                        android:indeterminateTint="@color/colorPrimary"
+                        android:indeterminate="true"
+                        android:layout_gravity="center"
+                        android:id="@+id/progressBar_posts"
+                        android:visibility="gone"
+                />
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/posts_hint"
+                        android:layout_gravity="center"
+                        android:textColor="@android:color/black"
+                        android:id="@+id/postsHint"
+                        android:visibility="invisible"
+                />
+
+            </LinearLayout>
+
 
             <TextView
                     android:layout_width="wrap_content"
@@ -177,15 +236,18 @@
                     android:layout_marginLeft="7dp"
                     android:layout_marginRight="7dp"
                     android:textSize="12sp"
+                    android:visibility="gone"
                     android:textColor="@android:color/black"/>
 
             <android.support.v7.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/RV_BandGroups"
-                    android:layout_margin="5dp">
+                    android:layout_margin="5dp"
+                    android:visibility="gone">
 
             </android.support.v7.widget.RecyclerView>
+
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

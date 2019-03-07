@@ -3,6 +3,7 @@ package com.bandapp.activities
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View
 import com.bandapp.R
@@ -11,6 +12,7 @@ import com.bandapp.models.User
 import com.bandapp.utilities.Utils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import io.grpc.okhttp.internal.Util
 import kotlinx.android.synthetic.main.activity_login_screen.*
 import kotlinx.android.synthetic.main.activity_signup_screen.*
 
@@ -48,11 +50,15 @@ class SignupScreen : BasicAppCompatActivity() {
                     sendAuthenticationEmail(firebaseAuth.currentUser)
                 }
                 user.id = firebaseUser?.uid
+                Utils.showSnackbar(signupBtn, "An email has been sent to your email address. Please verify your account", resources.getColor(R.color.colorPrimary))
+                val handler = Handler()
+                handler.postDelayed(Runnable {
+                    val intent = Intent(this@SignupScreen, ProfileScreen::class.java)
+                    intent.putExtra("user", user)
+                    startActivity(intent)
+                    finish()
+                }, 4000)
 
-                val intent = Intent(this@SignupScreen, ProfileScreen::class.java)
-                intent.putExtra("user", user)
-                startActivity(intent)
-                finish()
             }, failure = { s ->
                 progressBarSignup?.visibility = View.GONE
                 Utils.showSnackbar(progressBarSignup, s!!, Color.RED)
